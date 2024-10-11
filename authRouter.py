@@ -1,4 +1,5 @@
 from flask import Blueprint ,jsonify, request
+from marshmallow import ValidationError
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
@@ -8,12 +9,18 @@ from flask_jwt_extended import (
     get_jwt_identity,
 )
 from models import User
-from schemas import UserSchema
+from schemas import UserSchema,LoginSchema
 
 auth_bp=Blueprint('auth',__name__)
 
 @auth_bp.post('/register')
 def register():
+    schema = UserSchema()
+    try:
+        data = schema.load(request.json)
+    except ValidationError as err:
+        return jsonify({"errors": err.messages}), 400
+    
     data=request.get_json()
     print(data)
     user= User.get_user_by_email(email=data.get('email'))
@@ -28,6 +35,13 @@ def register():
 
 @auth_bp.post("/login")
 def login_user():
+
+    schema = LoginSchema()
+    try:
+        data = schema.load(request.json)
+    except ValidationError as err:
+        return jsonify({"errors": err.messages}), 400
+    
     data = request.get_json()
 
     user = User.get_user_by_email(email=data.get("email"))
