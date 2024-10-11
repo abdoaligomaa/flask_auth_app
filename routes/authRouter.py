@@ -8,8 +8,8 @@ from flask_jwt_extended import (
     current_user,
     get_jwt_identity,
 )
-from models import User
-from schemas import UserSchema,LoginSchema
+from models.userModle import User
+from schema.schemas import UserSchema,LoginSchema
 
 auth_bp=Blueprint('auth',__name__)
 
@@ -25,13 +25,13 @@ def register():
     print(data)
     user= User.get_user_by_email(email=data.get('email'))
     if user is not None:
-        return jsonify({'message':"user already exist"})
+        return jsonify({'message':"user already exist"}),400
     new_user=User(first_name=data.get('first_name'),last_name=data.get('last_name'),email=data.get('email'),phone_number=data.get('phone_number'),is_admin=data.get('is_admin'))
     new_user.set_password(password=data.get('password'))
     new_user.save()
     
     result=UserSchema().dump(new_user)
-    return {"message":"user is created","user":result}
+    return {"message":"user is created","user":result} ,202
 
 @auth_bp.post("/login")
 def login_user():

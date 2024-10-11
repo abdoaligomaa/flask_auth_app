@@ -1,11 +1,3 @@
-# from sqlalchemy.inspection import inspect
-
-# class JsonSerializableMixin:
-#     def to_dict(self):
-#         return {c.key: getattr(self, c.key)
-#                 for c in inspect(self).mapper.column_attrs}
-
-# Example usage in your User model:
 from extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 

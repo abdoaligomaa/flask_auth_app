@@ -1,7 +1,7 @@
 from flask import Flask ,jsonify
 from extensions import db,jwt
-from authRouter import auth_bp
-from userRouter import user_bp
+from routes.authRouter import auth_bp
+from routes.userRouter import user_bp
 
 def create_app():
 
