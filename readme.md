@@ -55,23 +55,17 @@ Follow these steps to get your development environment set up:
 5. Set up your environment variables:
    Create a `.env` file in the root directory and add the following:
    ```
-   FLASK_APP=run.py
-   FLASK_ENV=development
-   DATABASE_URL=your_database_url_here
-   SECRET_KEY=your_secret_key_here
-   ```
-
-6. Initialize the database:
-   ```
-   flask db init
-   flask db migrate
-   flask db upgrade
+    FLASK_SECRET_KEY=name
+    FLASK_DEBUG=True
+    FLASK_SQLALCHEMY_DATABASE_URI='sqlite:///db.db'
+    FLASK_SQLALCHEMY_ECHO=False
+    FLASK_JWT_SECRET_KEY=sercrete_key
    ```
 
 ## Running the Application
 To run the application, use the following command:
 ```
-flask run
+python main.py
 ```
 The API will be available at `http://localhost:5000`.
 
