@@ -24,10 +24,10 @@ def getAdmin():
     current_user_id = get_jwt_identity() # will return the object which incoded while login 
     user = User.query.get(current_user_id)
     if user is None:
-         return jsonify({"error":"no user found"}), 404 
+         return jsonify({"error":"no user found"}), 404
     # print(user.first_name) 
     if not user.is_admin:
-        return jsonify({"error": "Allowed only for admins"}), 200
+        return jsonify({"error": "Allowed only for admins"}), 403
     # result=UserSchema().dump(user)# if you try to send user object
     return f"hello ,{user.first_name}", 200 
 
